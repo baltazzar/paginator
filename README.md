@@ -1,4 +1,4 @@
-paginator
+PAGINATOR
 =========
 
-Módulo front-end de paginação de dados.
+> Módulo front-end de paginação de dados.
