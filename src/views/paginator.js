@@ -2,8 +2,10 @@ define(function(require, exports, module){
 
 	var Marionette = require('marionette');
 
+	require(['../templates']);
+
 	module.exports = Marionette.ItemView.extend({
-		template: 'grid/paginator.tpl',
+		template: 'paginator/paginator.tpl',
 
 		events: {
 			'submit form'         : function(ev) { return false; },
