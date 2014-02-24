@@ -1,6 +1,6 @@
 /**
  * Baltazzar Paginator
- * Versão: 0.1.0
+ * Versão: 0.1.1
  * Módulo front-end de paginação de dados.
  * Autor: Victor Bastos
  */
@@ -202,12 +202,14 @@ define('pagedCollection',['require','exports','module','backbone'],function(requ
 		},
 
 		parse: function(res) {
-			this.currentPage = res.data.currentPage;
-			this.pageCount = res.data.pageCount;
-			this.itemCount = res.data.itemCount;
-			this.itemOffset = res.data.itemOffset;
+			if(res.data) {
+				this.currentPage = res.data.currentPage;
+				this.pageCount = res.data.pageCount;
+				this.itemCount = res.data.itemCount;
+				this.itemOffset = res.data.itemOffset;
 
-			return res.data.itemList;
+				return res.data.itemList;
+			}
 		}
 	});
 });

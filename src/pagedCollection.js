@@ -58,12 +58,14 @@ define(function(require, exports, module){
 		},
 
 		parse: function(res) {
-			this.currentPage = res.data.currentPage;
-			this.pageCount = res.data.pageCount;
-			this.itemCount = res.data.itemCount;
-			this.itemOffset = res.data.itemOffset;
+			if(res.data) {
+				this.currentPage = res.data.currentPage;
+				this.pageCount = res.data.pageCount;
+				this.itemCount = res.data.itemCount;
+				this.itemOffset = res.data.itemOffset;
 
-			return res.data.itemList;
+				return res.data.itemList;
+			}
 		}
 	});
 });
