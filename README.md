@@ -1,4 +1,2 @@
-PAGINATOR
-=========
-
-> Módulo front-end de paginação de dados.
+# PAGINATOR
+> Módulo para paginação de registros.

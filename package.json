@@ -1,18 +1,21 @@
 {
-	"name": "paginator",
-	"version": "0.1.1",
-	"private": true,
-	"devDependencies": {
-		"grunt": "*",
-		"grunt-contrib-watch": "*",
-		"grunt-contrib-handlebars": "*",
-		"grunt-contrib-jshint": "*",
-		"grunt-contrib-requirejs": "*"
-	},
-	"volo": {
-		"url": "https://raw.github.com/baltazzar/paginator/{version}/dist/paginator.js"
-	},
-	"scripts": {
-		"preinstall": "npm install -g grunt-cli"
-	}
+  "name": "paginator",
+  "version": "0.2.0",
+  "description": "Módulo para paginação de registros.",
+  "private": true,
+  "devDependencies": {
+    "grunt"                 : "~0.4.4",
+    "grunt-browserify"      : "~2.0.1",
+    "grunt-contrib-jshint"  : "~0.9.2",
+    "grunt-contrib-watch"   : "~0.6.1",
+    "grunt-docco"           : "~0.3.3",
+    "jit-grunt"             : "~0.3.2",
+    "grunt-contrib-connect" : "~0.7.1"
+  },
+  "volo": {
+    "url": "https://raw.github.com/baltazzar/paginator/{version}/dist/paginator.js"
+  },
+  "scripts": {
+    "preinstall": "npm install -g grunt-cli"
+  }
 }

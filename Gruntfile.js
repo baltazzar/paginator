@@ -1,100 +1,90 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+	require('jit-grunt')(grunt);
 
 	var path = require('path');
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		banner: [
-		'/**\n',
-		' * Baltazzar Paginator\n',
-		' * Versão: <%= pkg.version %>\n',
-		' * Módulo front-end de paginação de dados.\n',
-		' * Autor: Victor Bastos\n',
-		' */'
+			'/**\n',
+			' * Baltazzar Paginator\n',
+			' * Versão: <%= pkg.version %>\n',
+			' * <%= pkg.description %>\n',
+			' * Autor: BaltazZar Team\n',
+			' */\n'
 		].join(''),
-		handlebars: {
-			options: {
-				namespace: 'Handlebars.templates',
-				processName: function(filePath) {
-					filePath = filePath.split('templates/');
-					return 'paginator/' + filePath[1];
-				},
-				processPartialName: function(filePath) {
-					filePath = filePath.split('templates/');
-					return 'paginator/' + filePath[1];
+		livereloadPort : 4000,
+		connect: {
+			server: {
+				options: {
+					hostname: '*',
+					port: 3000,
+					livereload: '<%= livereloadPort %>',
+					open: 'http://localhost:3000/test/index.html'
 				}
-			},
-			paginator: {
-				src: ['src/templates/paginator.tpl'],
-				dest: 'src/templates.js'
 			}
 		},
-		watch: {
-			files: {
-				files: ['**/*.{html,htm,css,js,png,jpg,gif}'],
+		docco: {
+			debug: {
+				src: ['src/**/*.js', '!src/libs/**/*.js'],
 				options: {
-					interval: 700
-				}
-			},
-			templates: {
-				files: 'src/templates/**/*.tpl',
-				tasks: ['handlebars'],
-				options: {
-					atBegin: true
+					output: 'docs/'
 				}
 			}
 		},
 		jshint: {
 			options: {
-				'-W030'  : true,
-				'-W061'  : true,
-				'-W116'  : true,
-				'-W041'  : true,
-				'-W069'  : true
+				'-W030': true,
+				'-W061': true,
+				'-W116': true,
+				'-W041': true,
+				'-W069': true
 			},
-			files: ['src/**/*.js', '!src/templates.js']
+			files: ['src/**/*.js', '!src/libs/**/*.js']
 		},
-		requirejs: {
-			options: {
-				paths: {
-					backbone   : 'empty:',
-					jquery     : 'empty:',
-					handlebars : 'empty:',
-					marionette : 'empty:'
-				},
-				baseUrl: 'src',
-				findNestedDependencies: true,
-				wrap: {
-					start: '<%= banner %>'
-				},
-				name: 'paginator'
-			},
-			normal: {
+		watch: {
+			files: {
+				files: ['test/**/*', 'dist/**/*'],
 				options: {
-					optimize: 'none',
-					out: 'dist/paginator.js'
+					livereload: '<%= livereloadPort %>'
 				}
 			},
-			min: {
+			dist: {
+				files: ['src/**/*.js', '!src/libs/**/*.js'],
+				tasks: ['browserify:dev']
+			}
+		},
+		browserify: {
+			dev: {
+				src: ['src/<%= pkg.name %>.js'],
+				dest: 'dist/<%= pkg.name %>.js',
 				options: {
-					optimize: 'uglify2',
-					uglify2: {
-						output: {
-							comments: false
-						}
-					},
-					out: 'dist/paginator.min.js'
+					alias: ['src/libs/jquery.js:jquery', 'src/libs/underscore.js:underscore', 'src/libs/backbone.js:backbone'],
+					bundleOptions: {
+						standalone: 'baltazzar.<%= pkg.name %>'
+					}
+				}
+			},
+			dist: {
+				src: ['src/<%= pkg.name %>.js'],
+				dest: 'dist/<%= pkg.name %>.js',
+				options: {
+					external: ['jquery', 'underscore', 'backbone'],
+					bundleOptions: {
+						standalone: 'baltazzar.<%= pkg.name %>'
+					}
 				}
 			}
 		}
 	});
 
-	grunt.registerTask('compile', ['handlebars']);
-	grunt.registerTask('dev', ['watch']);
-	grunt.registerTask('build', ['handlebars', 'jshint', 'requirejs']);
+	grunt.registerTask('dev', ['browserify:dev', 'connect', 'watch']);
+	grunt.registerTask('default', ['dev']);
+	grunt.registerTask('build', ['docco', 'jshint', 'browserify:dist', 'banner']);
+	grunt.registerTask('banner', function() {
+		var banner = grunt.config.get('banner'),
+			fileContent = grunt.file.read('dist/paginator.js');
 
-	grunt.loadNpmTasks('grunt-contrib-handlebars');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-requirejs');
+		grunt.file.write('dist/paginator.js', banner + fileContent);
+	});
 };
