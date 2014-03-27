@@ -1,6 +1,6 @@
 /**
  * Baltazzar Paginator
- * Versão: 0.2.0
+ * Versão: 0.2.1
  * Módulo para paginação de registros.
  * Autor: BaltazZar Team
  */
@@ -142,10 +142,8 @@ exports.paginator = Backbone.View.extend({
 		// Se pageCount for igual a 1 desabilita todos os elementos.
 		if(this.collection.pageCount == 1) {
 			this.$('.current-page').prop('disabled', true);
-			this.$('.per-page').prop('disabled', true);
 		} else {
 			this.$('.current-page').prop('disabled', false);
-			this.$('.per-page').prop('disabled', false);
 		}
 	},
 
