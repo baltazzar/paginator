@@ -459,9 +459,8 @@ o Paginator. Ex.:</p>
             
             <div class="content"><div class='highlight'><pre>exports.pagedCollection = Backbone.Collection.extend({
 
-	queryObj: {itens_per_page: <span class="hljs-number">10</span>},
-
 	initialize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> {</span>
+		<span class="hljs-keyword">this</span>.queryObj = {itens_per_page: <span class="hljs-number">10</span>};
 		<span class="hljs-keyword">this</span>.callFetch({page: <span class="hljs-number">1</span>});
 	},
 

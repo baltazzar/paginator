@@ -189,9 +189,8 @@ exports.paginator = Backbone.View.extend({
 // `var Pessoas = PagedCollection.extend({...});`
 exports.pagedCollection = Backbone.Collection.extend({
 
-	queryObj: {itens_per_page: 10},
-
 	initialize: function(options) {
+		this.queryObj = {itens_per_page: 10};
 		this.callFetch({page: 1});
 	},
 
