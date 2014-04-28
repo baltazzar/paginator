@@ -1,6 +1,6 @@
 /**
  * Baltazzar Paginator
- * Versão: 0.2.2
+ * Versão: 0.2.3
  * Módulo para paginação de registros.
  * Autor: BaltazZar Team
  */
